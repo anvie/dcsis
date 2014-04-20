@@ -11,7 +11,8 @@ class DcsisSpec extends Specification {
 
     def is = "Encryption test should" ^
         p ^
-        "be able to doing symetric encrypt and decrypt" ! trees.encDec ^
+        "person encryption key length must be 32" ! trees.encryptionKeyLength ^
+        "be able to doing symetric encrypt and decrypt  using person encryption key" ! trees.encDec ^
         p ^
         end
 
@@ -26,6 +27,12 @@ class DcsisSpec extends Specification {
 
         val person = PersonIdentityFactory.build(fp, id, 1)
         val keys = person.keys
+
+        def encryptionKeyLength = {
+            println("person.encryptionKey.length: " + person.encryptionKey.length)
+            person.encryptionKey.length must_== 32
+        }
+
 
         def encDec = {
 

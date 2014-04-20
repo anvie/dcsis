@@ -4,6 +4,8 @@ import java.security._
 import java.nio.{ByteOrder, ByteBuffer}
 import org.bouncycastle.crypto.digests.RIPEMD256Digest
 import com.ansvia.dcsis.helpers.HexHelpers._
+import net.glxn.qrgen.QRCode
+import net.glxn.qrgen.image.ImageType
 
 /**
  * Author: robin
@@ -43,6 +45,11 @@ case class Person(id:String, keys:KeyPair){
         ripemd.doFinal(rv, 0)
         rv
     }
+
+    lazy val idQrCode = {
+        QRCode.from(id).to(ImageType.GIF).stream()
+    }
+
 
 }
 

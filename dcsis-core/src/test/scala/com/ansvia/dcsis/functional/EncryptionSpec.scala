@@ -11,7 +11,7 @@ class EncryptionSpec extends Specification {
 
     def is = "Encryption test should" ^
         p ^
-        "person encryption key length must be 32" ! trees.encryptionKeyLength ^
+        "generated person encryption key length == 32" ! trees.encryptionKeyLength ^
         "be able to doing symetric encrypt and decrypt  using person encryption key" ! trees.encDec ^
         p ^
         end

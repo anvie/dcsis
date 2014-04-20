@@ -10,4 +10,5 @@ object Config {
     val usingEc = false
 //    val signAlgo = "SHA1withECDSA"
     val signAlgo = "SHA1withRSA"
+
 }

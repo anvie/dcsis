@@ -26,15 +26,14 @@ class PersonQRCodeSpec extends Specification {
         val person = PersonIdentityFactory.build(fp, id, 1)
 
         def genIdQrCode = {
-            val bos = person.idQrCode
 
             val path = "/tmp/qrcode-" + person.id + ".gif"
             val fw = new FileOutputStream(path)
-            fw.write(bos.toByteArray)
+            person.idQrCode.writeTo(fw)
             fw.close()
 
             val pkQrCode = new FileOutputStream("/tmp/pkqrcode.gif")
-            pkQrCode.write(person.pubKeyQrCode.toByteArray)
+            person.pubKeyQrCode.writeTo(pkQrCode)
             pkQrCode.close()
 
             println("QR code output: " + path)

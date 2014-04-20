@@ -7,7 +7,7 @@ import com.ansvia.dcsis.helpers.HexHelpers._
 import net.glxn.qrgen.QRCode
 import net.glxn.qrgen.image.ImageType
 import org.bouncycastle.util.encoders.{Base64Encoder, Base64}
-import com.ansvia.dcsis.{Config, Sign}
+import com.ansvia.dcsis.{Entity, Person, Config, Sign}
 
 /**
  * Author: robin
@@ -37,37 +37,7 @@ object IdentityFactory {
 }
 
 
-case class Person(id:String, keys:KeyPair){
 
-    lazy val encryptionKey = {
-        val ripemd = new RIPEMD256Digest()
-        val data = keys.getPublic.getEncoded
-        ripemd.update(data, 0, data.length)
-        val rv = new Array[Byte](ripemd.getDigestSize)
-        ripemd.doFinal(rv, 0)
-        rv
-    }
-
-    lazy val idQrCode = {
-        QRCode.from(id).to(ImageType.GIF).stream()
-    }
-
-    lazy val pubKeyQrCode = {
-        val bkey = new String(Base64.encode(keys.getPublic.getEncoded)).trim
-        println("pubKey b64: " + bkey + ". len: " + bkey.length)
-        QRCode.from(bkey).to(ImageType.GIF).stream()
-    }
-
-
-    def sign(data:Array[Byte]) = {
-        val signer = Signature.getInstance(Config.signAlgo, "BC")
-        signer.initSign(keys.getPrivate, KeyGenerator.secRand)
-        signer.update(data)
-        Sign(signer.sign())
-    }
-
-
-}
 
 
 
@@ -92,7 +62,7 @@ object PersonIdentityFactory {
 
 }
 
-case class Entity(id:String, keys:KeyPair)
+
 
 object EntityIdentityFactory {
 

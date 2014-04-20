@@ -28,7 +28,7 @@ class SignSpec extends DcsisTest {
 
             val path = "/tmp/qrcode-sign.gif"
             val fw = new FileOutputStream(path)
-            fw.write(sign.qrCode.toByteArray)
+            sign.getQrCode("https://travis-ci.org/anvie/blueprints-scala/jobs/23271287").writeTo(fw)
             fw.close()
 
             println("qrcode sign = " + sign)

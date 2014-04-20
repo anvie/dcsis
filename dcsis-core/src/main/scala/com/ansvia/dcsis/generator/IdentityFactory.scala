@@ -6,6 +6,8 @@ import org.bouncycastle.crypto.digests.RIPEMD256Digest
 import com.ansvia.dcsis.helpers.HexHelpers._
 import net.glxn.qrgen.QRCode
 import net.glxn.qrgen.image.ImageType
+import org.bouncycastle.util.encoders.{Base64Encoder, Base64}
+import com.ansvia.dcsis.Sign
 
 /**
  * Author: robin
@@ -50,8 +52,24 @@ case class Person(id:String, keys:KeyPair){
         QRCode.from(id).to(ImageType.GIF).stream()
     }
 
+    lazy val pubKeyQrCode = {
+        val bkey = new String(Base64.encode(keys.getPublic.getEncoded)).trim
+        println("pubKey b64: " + bkey + ". len: " + bkey.length)
+        QRCode.from(bkey).to(ImageType.GIF).stream()
+    }
+
+
+    def sign(data:Array[Byte]) = {
+        val signer = Signature.getInstance("SHA1withECDSA", "BC")
+        signer.initSign(keys.getPrivate, KeyGenerator.secRand)
+        signer.update(data)
+        Sign(signer.sign())
+    }
+
 
 }
+
+
 
 object PersonIdentityFactory {
 
@@ -97,11 +115,21 @@ object EntityIdentityFactory {
 
 object KeyGenerator {
 
+    Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider())
 
-    private val keyGen = KeyPairGenerator.getInstance("EC")
-    private val secRand = SecureRandom.getInstance("SHA1PRNG")
+    val usingEc = true
 
-    keyGen.initialize(256, secRand)
+    private val keyGen = if (usingEc)
+        KeyPairGenerator.getInstance("EC", "BC")
+    else
+        KeyPairGenerator.getInstance("RSA", "BC")
+
+    val secRand = SecureRandom.getInstance("SHA1PRNG")
+
+    if (usingEc)
+        keyGen.initialize(256, secRand)
+    else
+        keyGen.initialize(512, secRand)
 
     def generate() = {
         keyGen.generateKeyPair()

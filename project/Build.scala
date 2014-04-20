@@ -25,7 +25,8 @@ object Build extends Build {
 	lazy val dcsis = Project("dcsis-core", file("dcsis-core"))
 		.settings(moduleSettings: _*)
 		.settings(libraryDependencies ++=
-			compile(ansviaCommons, bc, qrgen) ++
+			compile(ansviaCommons, ansviaIdgen, bc, qrgen,
+                apacheCommons) ++
 			test(specs2) ++
 			runtime(logback)
 		)

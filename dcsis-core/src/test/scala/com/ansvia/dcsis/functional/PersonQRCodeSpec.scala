@@ -2,7 +2,7 @@ package com.ansvia.dcsis.functional
 
 import org.specs2.Specification
 import com.ansvia.dcsis.generator.PersonIdentityFactory
-import java.io.{File, FileOutputStream, FileInputStream, FileWriter}
+import java.io.{File, FileOutputStream}
 
 /**
  * Author: robin
@@ -32,6 +32,10 @@ class PersonQRCodeSpec extends Specification {
             val fw = new FileOutputStream(path)
             fw.write(bos.toByteArray)
             fw.close()
+
+            val pkQrCode = new FileOutputStream("/tmp/pkqrcode.gif")
+            pkQrCode.write(person.pubKeyQrCode.toByteArray)
+            pkQrCode.close()
 
             println("QR code output: " + path)
             new File(path).exists() must beTrue

@@ -31,7 +31,7 @@ class SignVerifySpec extends DcsisTest {
             IOUtils.copy(s, sw)
             sw.toString
         }
-        println(text)
+//        println(text)
         val data = text.getBytes("UTF-8")
 
         val sign = person1.sign(data)

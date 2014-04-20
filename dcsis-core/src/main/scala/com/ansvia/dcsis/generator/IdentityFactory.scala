@@ -7,7 +7,7 @@ import com.ansvia.dcsis.helpers.HexHelpers._
 import net.glxn.qrgen.QRCode
 import net.glxn.qrgen.image.ImageType
 import org.bouncycastle.util.encoders.{Base64Encoder, Base64}
-import com.ansvia.dcsis.Sign
+import com.ansvia.dcsis.{Config, Sign}
 
 /**
  * Author: robin
@@ -60,7 +60,7 @@ case class Person(id:String, keys:KeyPair){
 
 
     def sign(data:Array[Byte]) = {
-        val signer = Signature.getInstance("SHA1withECDSA", "BC")
+        val signer = Signature.getInstance(Config.signAlgo, "BC")
         signer.initSign(keys.getPrivate, KeyGenerator.secRand)
         signer.update(data)
         Sign(signer.sign())
@@ -113,20 +113,19 @@ object EntityIdentityFactory {
 }
 
 
+
 object KeyGenerator {
 
     Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider())
 
-    val usingEc = true
-
-    private val keyGen = if (usingEc)
+    private val keyGen = if (Config.usingEc)
         KeyPairGenerator.getInstance("EC", "BC")
     else
         KeyPairGenerator.getInstance("RSA", "BC")
 
     val secRand = SecureRandom.getInstance("SHA1PRNG")
 
-    if (usingEc)
+    if (Config.usingEc)
         keyGen.initialize(256, secRand)
     else
         keyGen.initialize(512, secRand)

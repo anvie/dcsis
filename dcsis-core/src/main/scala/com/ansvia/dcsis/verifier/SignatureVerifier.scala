@@ -1,6 +1,6 @@
 package com.ansvia.dcsis.verifier
 
-import com.ansvia.dcsis.Sign
+import com.ansvia.dcsis.{Config, Sign}
 import java.security.{PublicKey, Signature}
 
 /**
@@ -12,7 +12,7 @@ import java.security.{PublicKey, Signature}
 object SignatureVerifier {
 
     def verify(sign:Sign, pubKey:PublicKey, data:Array[Byte]) = {
-        val signer = Signature.getInstance("SHA1withECDSA", "BC")
+        val signer = Signature.getInstance(Config.signAlgo, "BC")
         signer.initVerify(pubKey)
         signer.update(data)
         signer.verify(sign.bytes)

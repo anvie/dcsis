@@ -8,7 +8,7 @@ package com.ansvia.dcsis.functional
  */
 
 import org.specs2.Specification
-import java.security.{Security, SecureRandom, KeyPairGenerator}
+import java.security.{GeneralSecurityException, Security, SecureRandom, KeyPairGenerator}
 import javax.crypto.Cipher
 
 class EncDecPrivPubSpec extends Specification {
@@ -17,6 +17,7 @@ class EncDecPrivPubSpec extends Specification {
         sequential ^
         "can encrypt using private key and decrypt using public key" ! trees.test1 ^
         "cannot decrypt non paired public key" ! trees.test2 ^
+        "cannot encrypt/decrypt using both public key" ! trees.test3 ^
         end
 
     object trees {
@@ -67,6 +68,31 @@ class EncDecPrivPubSpec extends Specification {
             }
             catch {
                 case e:Exception =>
+                    true must beTrue
+            }
+        }
+
+
+        def test3 = {
+
+            val data = text.getBytes("UTF-8")
+
+            try {
+                c.init(Cipher.ENCRYPT_MODE, keys.getPublic)
+                encrypted = c.doFinal(data)
+
+                println("encrypted: \n" + new String(encrypted, "UTF-8"))
+
+                c.init(Cipher.DECRYPT_MODE, keys.getPublic)
+                val decrypted = c.doFinal(encrypted)
+
+                val rv = new String(decrypted, "UTF-8").trim
+                println("decrypted: " + rv)
+
+                text mustNotEqual rv
+            }
+            catch {
+                case e:GeneralSecurityException =>
                     true must beTrue
             }
         }

@@ -1,4 +1,4 @@
-package com.ansvia.dcsis
+package com.ansvia.dcsis.functional
 
 import org.specs2.Specification
 import org.bouncycastle.crypto.engines.TwofishEngine
@@ -7,7 +7,7 @@ import org.bouncycastle.crypto.params.KeyParameter
 import com.ansvia.dcsis.generator.PersonIdentityFactory
 import com.ansvia.dcsis.helpers.HexHelpers._
 
-class DcsisSpec extends Specification {
+class EncryptionSpec extends Specification {
 
     def is = "Encryption test should" ^
         p ^

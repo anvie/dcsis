@@ -5,7 +5,8 @@ object Dependencies {
         "typesafe repo"   at "http://repo.typesafe.com/typesafe/releases/",
         "glassfish repo"  at "http://download.java.net/maven/glassfish/",
         "spray repo"      at "http://repo.spray.cc/",
-        "Ansvia repo"     at "http://scala.repo.ansvia.com/releases/"
+        "Ansvia repo"     at "http://scala.repo.ansvia.com/releases/",
+	    "Local repo"      at "file://" + Path.userHome + "/.m2/repository"
     )
 
     def compile   (deps: ModuleID*): Seq[ModuleID] = deps map (_ % "compile")
@@ -22,4 +23,5 @@ object Dependencies {
     val qrgen           = "net.glxn" % "qrgen" % "1.4"
     val bc              = "org.bouncycastle" % "bcprov-jdk16" % "1.46"
     val apacheCommons   = "commons-io" % "commons-io" % "2.4"
+    val gossip          = "com.jolira" % "java-gossip" % "1.5.2-SNAPSHOT"
 }

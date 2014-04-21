@@ -9,7 +9,7 @@ object Build extends Build {
 
   	// root
 	lazy val root = Project("root", file("."))
-		.aggregate(examples, dcsis)
+		.aggregate(examples, dcsis, server)
 		.settings(basicSettings: _*)
 		.settings(noPublishing: _*)
 		
@@ -30,4 +30,13 @@ object Build extends Build {
 			test(specs2) ++
 			runtime(logback)
 		)
+
+	lazy val server = Project("dcsis-server", file("dcsis-server"))
+		.settings(moduleSettings: _*)
+		.settings(libraryDependencies ++=
+			compile(ansviaCommons, gossip,
+                apacheCommons) ++
+			test(specs2) ++
+			runtime(logback)
+		).dependsOn(dcsis)
 }

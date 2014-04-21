@@ -21,7 +21,7 @@ case class Sign(bytes:Array[Byte], person:Person){
             url + "\n" +
             bytes.toStr
 
-        println("data: " + data)
+//        println("data: " + data)
         QRCode.from(data).withSize(200,200)
             .to(ImageType.GIF)
     }
@@ -30,3 +30,4 @@ case class Sign(bytes:Array[Byte], person:Person){
 object Sign {
     val VERSION = 1
 }
+

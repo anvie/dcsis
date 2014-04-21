@@ -55,15 +55,14 @@ object BuildSettings {
 
       crossPaths := false,
 
-      pomExtra := (
-          <url>http://your.info.url.here</url>
+      pomExtra := <url>http://github.com/anvie</url>
           <developers>
-            <developer>
-              <id>your id here</id>
-              <name>Your name here</name>
-              <url>http://your.site.here.com</url>
-            </developer>
-          </developers>)
+              <developer>
+                  <id>anvie</id>
+                  <name>Robin Sy</name>
+                  <url>http://www.mindtalk.com/u/robin</url>
+              </developer>
+          </developers>
   )
 
 }

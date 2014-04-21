@@ -35,7 +35,7 @@ object Build extends Build {
 		.settings(moduleSettings: _*)
 		.settings(libraryDependencies ++=
 			compile(ansviaCommons, gossip,
-                apacheCommons) ++
+                apacheCommons, liftWebkit) ++
 			test(specs2) ++
 			runtime(logback)
 		).dependsOn(dcsis)

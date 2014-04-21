@@ -8,4 +8,5 @@ import java.security.KeyPair
  * Time: 8:36 PM
  *
  */
-case class Entity(id:String, keys:KeyPair)
+case class Entity(id:String, keys:KeyPair) extends BaseIdentity
+

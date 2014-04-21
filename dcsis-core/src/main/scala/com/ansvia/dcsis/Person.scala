@@ -13,7 +13,7 @@ import com.ansvia.dcsis.generator.KeyGenerator
  * Time: 8:36 PM
  *
  */
-case class Person(id:String, keys:KeyPair){
+case class Person(id:String, keys:KeyPair) extends BaseIdentity {
 
     lazy val encryptionKey = {
         val ripemd = new RIPEMD256Digest()

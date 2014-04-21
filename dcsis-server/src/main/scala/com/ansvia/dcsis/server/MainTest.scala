@@ -1,8 +1,8 @@
-package com.ansvia.dcsis
+package com.ansvia.dcsis.server
 
-import com.ansvia.commons.logging.Slf4jLogger
 import java.net.{InetSocketAddress, InetAddress}
 import com.jolira.gossip.{Listener, Service}
+import com.ansvia.commons.logging.Slf4jLogger
 
 /**
  * Author: robin
@@ -10,7 +10,7 @@ import com.jolira.gossip.{Listener, Service}
  * Time: 9:27 AM
  *
  */
-object Main extends Slf4jLogger {
+object MainTest extends Slf4jLogger {
 
     def main(args: Array[String]) {
         
